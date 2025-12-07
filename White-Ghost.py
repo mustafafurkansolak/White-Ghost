@@ -109,12 +109,13 @@ while True:
                 ping_at(ip)
             elif secim2 == "2":
                 port_tara(ip)
-            elif secim == "3":
+            elif secim2 == "3":
                 os_tara(ip)
             elif secim2 == "4":
                 sv_tara(ip)
-            #elif secim == "5":
+            #elif secim2 == "5":
             elif secim2 == "6":
                 sys.exit()
     elif secim == "3":
+
         sys.exit()
