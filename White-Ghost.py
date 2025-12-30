@@ -139,12 +139,7 @@ while True:
             elif secim2 == "5":
                 os = input("İşletim Sistemi Seçiniz (1-Windows, 2-Linux): ")
                 Lip = input("Yerel İp: ")
-                dosya = input("Dosya Adı: ")
-                if dosya.returncode == 0:
-                   print("✅ Ping başarılı!")
-                else:
-                   print("❌ Ping başarısız!")
-            
+                dosya = input("Dosya Adı: ")          
                 if os == "1":
                     payloadWin(Lip, dosya)
                 elif os == "2":
@@ -156,3 +151,4 @@ while True:
                 sys.exit()
     elif secim == "3":
         sys.exit()
+
