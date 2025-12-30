@@ -4,8 +4,6 @@ import platform
 import sys
 import os
 
-def ekran_temizle():
-    os.system("clear")
 
 def ping_at(ip):
     ekran_temizle()
@@ -99,7 +97,6 @@ print("""
             ---------------------------------- 
       """)
 while True:
-    ekran_temizle()
     print("""
       -------------------- Menü --------------------
       |                                            |
